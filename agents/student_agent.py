@@ -155,36 +155,31 @@ class StudentAgent(Agent):
             new_chess_board[new_x][new_y][d] = 1
             return new_chess_board
 
-        def heuristic_evaluation(chess_board, my_pos, adv_pos):
-            # Replace this with your own heuristic function that evaluates the score for a given node
-            # This function should return a heuristic score for the node at the given index
-
-            # number of moves player
-            my_valid_moves = 0
-            for x in range(board_size):
-                for y in range(board_size):
-                    for d in range(4):
-                        # If move valid, proceed
-                        if check_valid_move(my_pos, np.array((x, y)), d, adv_pos):
-                            my_valid_moves += 1
-
-            # number of moves adversary
-            adv_valid_moves = 0
-            for x in range(board_size):
-                for y in range(board_size):
-                    for d in range(4):
-                        # If move valid, increment moves
-                        if check_valid_move(adv_pos, np.array((x, y)), d, adv_pos):
-                            adv_valid_moves += 1
-
-            score = my_valid_moves - adv_valid_moves
+        def heuristic_evaluation(my_pos, adv_pos):
+            score = len(get_rom(my_pos)) - len(get_rom(adv_pos))
             return score
 
-        def depth_limited_minimax(chess_board, my_pos, adv_pos, depth, alpha, beta, maximizing_player=True):
-            if depth == 0:
-                return None, heuristic_evaluation(chess_board, my_pos, adv_pos)
+        def get_rom(position):
+            rom = []
+            for x in range(-max_step, max_step + 1):
+                for y in range(-max_step, max_step + 1):
+                    # if the step is within range of the agent
+                    if abs(x) + abs(y) <= max_step:
+                        # if the movement is within the map
+                        if (
+                                0 <= position[0] + x < board_size
+                                and 0 <= position[1] + y < board_size
+                        ):
+                            rom.append([position[0] + x, position[1] + y])
+                            # Convert the list of pairs to a NumPy array
+            # rom = np.array(rom).T if rom else np.array([[], []])
+            return rom
 
-            end_return = check_endgame(chess_board)
+        def depth_limited_minimax(board, my_Pose, adv_Pose, depth, alpha, beta, maximizing_player=True):
+            if depth == 0:
+                return None, heuristic_evaluation(my_Pose, adv_Pose)
+
+            end_return = check_endgame(board)
 
             if end_return[0]:
                 score = end_return[1] - end_return[2]
@@ -193,56 +188,59 @@ class StudentAgent(Agent):
             if maximizing_player:
                 max_eval = float('-inf')
                 best_move = None
+                rom = get_rom(my_Pose)
 
                 # Iterating over every square and every wall on board
-                for x in range(board_size):
-                    for y in range(board_size):
-                        for d in range(4):
-                            # If move valid, proceed
-                            if check_valid_move(my_pos, np.array((x, y)), d, adv_pos):
-                                new_my_pos = (x, y)
-                                print("checking valid move: ", x, ", ", y, ", ", d, "at depth", depth)
-                                # copying the board and updating with the move
-                                new_chess_board = update_board(chess_board, x, y, d)  # Update board with new wall
+                for square in rom:
+                    for d in range(4):
+                        # If move valid, proceed
+                        if check_valid_move(my_Pose, np.array(square), d, adv_Pose):
+                            new_my_pos = square
+                            # Update the board with the move
+                            print("checking valid maximizer move ", tuple(square), d, "depth ", depth)
+                            new_chess_board = update_board(board, square[0], square[1], d)
 
-                                _, eval = depth_limited_minimax(new_chess_board, new_my_pos, adv_pos, depth - 1, alpha,
-                                                                beta, False)
+                            # Perform recursive depth-limited Minimax
+                            _, eval = depth_limited_minimax(new_chess_board, new_my_pos, adv_Pose, depth - 1, alpha,
+                                                            beta, False)
 
-                                if eval > max_eval:
-                                    max_eval = eval
-                                    best_move = (new_my_pos, d)
+                            if eval > max_eval:
+                                max_eval = eval
+                                best_move = (new_my_pos, d)
 
-                                alpha = max(alpha, eval)
-                                if beta <= alpha:
-                                    break  # Beta cut-off
+                            alpha = max(alpha, eval)
+                            if beta <= alpha:
+                                break  # Beta cut-off
 
                 return best_move, max_eval
 
             else:  # Minimizing player (adversary)
                 min_eval = float('inf')
                 best_move = None
+                rom = get_rom(adv_Pose)
 
                 # Iterating over every square and every wall on board
-                for x in range(board_size):
-                    for y in range(board_size):
-                        for d in range(4):
-                            # If move valid, proceed
-                            if check_valid_move(adv_pos, np.array((x, y)), d, adv_pos):
-                                new_adv_pos = (x, y)
+                for square in rom:
+                    for d in range(4):
+                        # If move valid, proceed
+                        if check_valid_move(adv_Pose, np.array(square), d, my_Pose):
+                            new_adv_pos = square
+                            print("checking valid minimizer move ", tuple(square), d, "depth ", depth)
 
-                                # copying the board and updating with the move
-                                new_chess_board = update_board(chess_board, x, y, d)  # Update board with new wall
+                            # Update the board with the move
+                            new_chess_board = update_board(board, square[0], square[1], d)
 
-                                _, eval = depth_limited_minimax(new_chess_board, my_pos, new_adv_pos, depth - 1, alpha,
-                                                                beta, True)
+                            # Perform recursive depth-limited Minimax
+                            _, eval = depth_limited_minimax(new_chess_board, my_Pose, new_adv_pos, depth - 1, alpha,
+                                                            beta, True)
 
-                                if eval < min_eval:
-                                    min_eval = eval
-                                    best_move = (my_pos, d)  # Assuming adversary doesn't move
+                            if eval < min_eval:
+                                min_eval = eval
+                                best_move = (my_pos, d)  # Assuming adversary doesn't move
 
-                                beta = min(beta, eval)
-                                if beta <= alpha:
-                                    break  # Alpha cut-off
+                            beta = min(beta, eval)
+                            if beta <= alpha:
+                                break  # Alpha cut-off
 
                 return best_move, min_eval
 
@@ -266,30 +264,30 @@ class StudentAgent(Agent):
         # so far when it nears 2 seconds.
 
         start_time = time.time()
-        depth_limit = 1
+        depth_limit = 3
         best_move = None
-        while time.time() - start_time < 5:  # Time limit of 2 seconds
-            # Perform iterative deepening with depth-limited Minimax
+
+        while time.time() - start_time < 5:  # Time limit of 5 seconds
             alpha = float('-inf')
             beta = float('inf')
             temp_best_move = None
 
-            # Iterative deepening Minimax search
-            for depth in range(1, max_step + 1):
-                # Call the depth-limited Minimax function with depth, alpha, beta, etc.
-                new_best_move = depth_limited_minimax(chess_board, my_pos, adv_pos, depth, alpha, beta)
+            # Perform depth-limited Minimax with iterative deepening
+            new_best_move, _ = depth_limited_minimax(chess_board, my_pos, adv_pos, depth_limit, alpha, beta)
 
-                if new_best_move:
-                    temp_best_move = new_best_move
-                    best_move = temp_best_move
-                else:
-                    break
+            if new_best_move:
+                temp_best_move = new_best_move
+                best_move = temp_best_move
 
-            # Update depth_limit based on time and other criteria if needed
+            # Update the depth limit for the next iteration
             depth_limit += 1
-        # time_taken = start_time - time.time()
-        # print("My AI's turn took ", time_taken, "seconds.")
+            if time.time() - start_time >= 5:
+                break
 
+        if best_move is None:
+            return 13, 13, 1
+
+        print("this took ", time.time() - start_time," seconds")
         return best_move[0]
 
         # dummy return
