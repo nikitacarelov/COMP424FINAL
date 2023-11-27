@@ -18,7 +18,6 @@ class StudentAgent(Agent):
     def __init__(self):
         super(StudentAgent, self).__init__()
         self.name = "StudentAgent"
-        self.moves_tree = defaultdict(set)
  
         self.dir_map = {
             "u": 0,
@@ -27,10 +26,10 @@ class StudentAgent(Agent):
             "l": 3,
         }
 
-
     def computeAllMoves(self, player_pos, other_pos, max_step, chess_board):
         # Moves (Up, Right, Down, Left)
         moves = ((-1, 0), (0, 1), (1, 0), (0, -1))
+        moves_tree = defaultdict(set)
         visited = set()
         
         def dfs(x, y, dir, depth):
@@ -38,10 +37,10 @@ class StudentAgent(Agent):
             if depth == max_step + 1:
                 return False
             visited.add((x,y))
-            self.moves_tree[player_pos].add((x,y))
+            moves_tree[player_pos].add((x,y))
                 
             for (r, c, dir) in [(x - 1, y, 0), (x + 1, y, 2), (x, y - 1, 3), (x, y + 1, 1)]:
-                if depth != 0 and (r,c) not in visited and not chess_board[x, y, dir] and not other_pos == (r,c) and 0 <= r < len(chess_board) and 0 <= c < len(chess_board[0]):
+                if (r,c) not in visited and not chess_board[x, y, dir] and not other_pos == (r,c) and 0 <= r < len(chess_board) and 0 <= c < len(chess_board[0]):
                     if dfs(r, c, dir, depth + 1):
                         return True
             return False
@@ -49,7 +48,7 @@ class StudentAgent(Agent):
         x, y = player_pos
         dfs(x, y, 0, 0)
         print(visited)
-        print(self.moves_tree)
+        print(moves_tree)
         
             
     def decideMove(self, player_pos, other_pos, max_step, chess_board):
@@ -60,7 +59,7 @@ class StudentAgent(Agent):
         
         self.computeAllMoves(player_pos, other_pos, max_step, chess_board)
         #run IDS and find best move
-        # print(self.moves_tree)
+  
     
     def step(self, chess_board, my_pos, adv_pos, max_step):
         """
