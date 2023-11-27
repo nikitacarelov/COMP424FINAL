@@ -29,7 +29,8 @@ class RandomAgent(Agent):
             # Build a list of the moves we can make
             allowed_dirs = [d
                             for d in range(0, 4)  # 4 moves possible
-                            if not chess_board[r, c, d] and  # chess_board True means wall
+                            # chess_board True means wall
+                            if not chess_board[r, c, d] and
                             not adv_pos == (r + moves[d][0], c + moves[d][1])]  # cannot move through Adversary
             print(allowed_dirs)
 
@@ -40,12 +41,11 @@ class RandomAgent(Agent):
             random_dir = allowed_dirs[np.random.randint(0, len(allowed_dirs))]
             print(random_dir)
 
-            # This is how to update a row,col by the entries in moves 
+            # This is how to update a row,col by the entries in moves
             # to be consistent with game logic
             m_r, m_c = moves[random_dir]
-            print(m_r, m_c)
+
             my_pos = (r + m_r, c + m_c)
-            print(my_pos)
 
         # Final portion, pick where to put our new barrier, at random
         r, c = my_pos

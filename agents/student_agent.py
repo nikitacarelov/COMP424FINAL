@@ -1,5 +1,4 @@
 # Student agent: Add your own agent here
-from collections import defaultdict
 from agents.agent import Agent
 from store import register_agent
 import sys
@@ -18,7 +17,6 @@ class StudentAgent(Agent):
     def __init__(self):
         super(StudentAgent, self).__init__()
         self.name = "StudentAgent"
-        self.moves_tree = defaultdict(dict)
         self.dir_map = {
             "u": 0,
             "r": 1,
@@ -26,16 +24,14 @@ class StudentAgent(Agent):
             "l": 3,
         }
 
-    def computeAllMoves(self, player_pos, other_pos, max_step, chess_board, max_depth_tree):
+    def computeAllMoves(self, player_pos, other_pos, max_step, chess_board):
         visited = set()
-        #switch between whos turn we're computing
+        allMoves = []
+        num_squares_available = 0
 
         def dfs(x, y, dir, steps_taken):
-            
-            if max_depth_tree <= 0:
-                return
-        
-            if steps_taken == max_step + 1:
+            nonlocal num_squares_available
+            if steps_taken == max_step:
                 return
             visited.add((x, y))
 
@@ -44,35 +40,82 @@ class StudentAgent(Agent):
                 if not chess_board[x, y, dir_wall]:
                     board = deepcopy(chess_board)
                     board[x][y][dir] = True
-                    
-                    tmp = player_pos
-                    p1_pos = other_pos
-                    p2_pos = tmp
-                    self.moves_tree[player_pos].update({(x, y, dir_wall):{self.computeAllMoves(p1_pos, p2_pos, max_step, board, max_depth_tree -1)}})
+                    allMoves.append((((x, y), dir), board))
+                    num_squares_available += 1
 
             for (r, c, dir) in [(x - 1, y, 0), (x + 1, y, 2), (x, y - 1, 3), (x, y + 1, 1)]:
                 if (r, c) not in visited and not chess_board[x, y, dir] and not other_pos == (r, c) and 0 <= r < len(chess_board) and 0 <= c < len(chess_board[0]):
                     dfs(r, c, dir, steps_taken + 1)
-                   
+
         x, y = player_pos
         dfs(x, y, 0, 0)
-        return 
-        
-    
 
-    def decideMove(self, player_pos, other_pos, max_step, chess_board):
-        # def IDS(self, max_depth, player_pos, other_pos):
-        #     for _ in range(max_depth):
-        #         self.computeAllMoves(player_pos, other_pos, max_step, chess_board)
+        return (allMoves, num_squares_available)
 
-        # self.IDS(defaultdict(dict), 3, player_pos, other_pos)
-        self.computeAllMoves(player_pos, other_pos, max_step, chess_board, 1)
+    def minimax(self, player_pos, dir, other_pos, max_step, chess_board, depth, max_player,
+                alpha, beta):
 
-        print(self.moves_tree)
+        # minimax score heuristic: number squares I have to move - number squares adversay has to move in
+        # depth limited minimax w AB pruning
+        if depth == 2:
+            nums_squares_I_have_to_move = self.computeAllMoves(
+                player_pos, other_pos, max_step, chess_board)[1]
 
-       # minimax score heuristic: number squares I have to move - number squares adversay has to move in
+            nums_squares_adv_have_to_move = self.computeAllMoves(
+                other_pos, player_pos, max_step, chess_board)[1]
+            pos = player_pos if max_player else other_pos
+            return (nums_squares_I_have_to_move - nums_squares_adv_have_to_move, (pos, dir))
 
-       # run (a,b) pruning
+        if max_player:
+            best = (-1000, ((0, 0), 0))
+
+            # compute all moves
+            moves_list = self.computeAllMoves(
+                player_pos, other_pos, max_step, chess_board)[0]
+            for (((max_player_pos, dir), board)) in moves_list:
+
+                # call minimax on all children of node
+                minimax_res = self.minimax(max_player_pos, dir, other_pos, max_step,
+                                           board, depth + 1, False, alpha, beta)
+                val = minimax_res[0]
+                best = best if max(
+                    best[0], val) == best[0] else minimax_res
+
+                alpha = alpha if max(
+                    alpha[0], best[0]) == alpha[0] else minimax_res
+                # alpha = max(alpha, best)
+
+                # Alpha Beta Pruning
+                if beta[0] <= alpha[0]:
+                    break
+            return best
+
+        else:
+            best = (1000, ((0, 0), 0))
+
+            # Recur for left and
+            # right children
+            moves_list = self.computeAllMoves(
+                other_pos, player_pos, max_step, chess_board)[0]
+
+            for (((min_player_pos, dir), board)) in moves_list:
+                minimax_res = self.minimax(player_pos, dir, min_player_pos, max_step,
+                                           board, depth + 1, True, alpha, beta)
+
+                val = minimax_res[0]
+
+                best = best if min(
+                    best[0], val) == best[0] else minimax_res
+
+                beta = beta if min(
+                    alpha[0], best[0]) == alpha[0] else minimax_res
+                # beta = min(beta, best)
+
+                # Alpha Beta Pruning
+                if beta[0] <= alpha[0]:
+                    break
+
+        return best
 
     def step(self, chess_board, my_pos, adv_pos, max_step):
         """
@@ -96,11 +139,15 @@ class StudentAgent(Agent):
 
         start_time = time.time()
         # first compute all moves for my_pos since its my turn
-        self.decideMove(my_pos, adv_pos, max_step, chess_board)
+
+        minimax_res = self.minimax(my_pos, 0, adv_pos, max_step, chess_board, 0, True,
+                                   (-1000, ((0, 0), 0)), (1000, ((0, 0), 0)))
+        print("result of minimax: ", minimax_res)
 
         time_taken = time.time() - start_time
 
         print("My AI's turn took ", time_taken, "seconds.")
 
         # dummy return
-        return my_pos, self.dir_map["u"]
+        return minimax_res[1]
+        # return my_pos, self.dir_map["u"]
