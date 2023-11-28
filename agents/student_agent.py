@@ -153,28 +153,97 @@ class StudentAgent(Agent):
         def update_board(board, new_x, new_y, d):
             new_board = deepcopy(board)
             # Assuming the board is represented as a numpy array with True indicating wall positions
-            new_board[new_x][new_y][d] = 1
+            new_board[new_x][new_y][d] = True
             return new_board
 
         # heuristic score evaluation
-        def heuristic_evaluation(board, my_pos, adv_pos):
-            # TODO: make the ROM heuristic compare valid steps with check_valid_move() instead of total rom
+        def heuristic_evaluation(board, my_pose, adv_pose, d):
+            def rom_heuristic():
+                my_rom = get_rom(my_pos)
+                adv_rom = get_rom(adv_pos)
+                my_score = 0
+                adv_score = 0
+                for square in my_rom:
+                    for d in range(4):
+                        if check_valid_move(my_pos, np.array(square), d, adv_pos):
+                            my_score += 1
 
-            my_rom = get_rom(my_pos)
-            adv_rom = get_rom(adv_pos)
-            my_score = 0
-            adv_score = 0
-            for square in my_rom:
-                for d in range(4):
-                    if check_valid_move(my_pos, np.array(square), d, adv_pos):
-                        my_score += 1
+                for square in adv_rom:
+                    for d in range(4):
+                        if check_valid_move(adv_pos, np.array(square), d, my_pos):
+                            adv_score += 1
 
-            for square in adv_rom:
-                for d in range(4):
-                    if check_valid_move(adv_pos, np.array(square), d, my_pos):
-                        adv_score += 1
+                score = my_score - adv_score
+                return score
 
-            score = my_score - adv_score
+            def distance_heuristic():
+                dist = np.sum(math.dist(my_pose, adv_pose))
+                return dist
+
+            def wall_heuristic():
+                score = 0
+                long_score = 7
+                corner_score = 4
+                death_score = -20
+
+                if d == 0 or 2:  # walls in line with up or down wall
+                    try:
+                        if board[my_pose[0], my_pose[1] + 1, d] is True or board[my_pose[0], my_pose[1] - 1, d] is True:
+                            score = long_score
+                    except:
+                        pass
+
+                if d == 0 or 2:  # walls left and right of you
+                    try:
+                        if board[my_pose[0] , my_pose[1], 1] is True and board[my_pose[0], my_pose[1], 3] is True:
+                            score = death_score
+                    except:
+                        pass
+
+                if d == 0:  # walls left or right upwards of you
+                    try:
+                        if board[my_pose[0] - 1, my_pose[1], 1] is True or board[my_pose[0] - 1, my_pose[1], 3] is True:
+                            score = corner_score
+                    except:
+                        pass
+                if d == 2:  # walls left or right downwards of you
+                    try:
+                        if board[my_pose[0] + 1, my_pose[1], 1] is True or board[my_pose[0] + 1, my_pose[1], 3] is True:
+                            score = corner_score
+                    except:
+                        pass
+
+                if d == 1 or 3:  # right or left walls
+                    try:
+                        if board[my_pose[0] + 1, my_pose[1], d] is True or board[my_pose[0] - 1, my_pose[1], d] is True:
+                            score = long_score
+                    except:
+                        pass
+
+                    # skip case where the walls are around you because that's bad
+                if d == 1 or 3:  # walls up or down of you
+                    try:
+                        if board[my_pose[0], my_pose[1], 0] is True and board[my_pose[0], my_pose[1], 2] is True:
+                            score = death_score
+                    except:
+                        pass
+
+                if d == 1:  # walls down or up rightwards of you
+                    try:
+                        if board[my_pose[0], my_pose[1] + 1, 1] is True or board[my_pose[0], my_pose[1] + 1, 3] is True:
+                            score = corner_score
+                    except:
+                        pass
+
+                if d == 3:  # walls left or right downwards of you
+                    try:
+                        if board[my_pose[0], my_pose[1] - 1, 1] is True or board[my_pose[0], my_pose[1] - 1, 3] is True:
+                            score = corner_score
+
+                    except:
+                        pass
+                return score
+            score = (5 * rom_heuristic()) + (10 * distance_heuristic()) + (5 * wall_heuristic())
 
             return score
 
@@ -210,18 +279,17 @@ class StudentAgent(Agent):
                 return 3, ratio
 
         def change_rom(rom, my_pose, adv_pose, maximizer):
-            game_state, ratio = get_game_state(chess_board)
             new_rom = rom
-            if game_state == 1:
+            if game_state[0] == 1:
                 for square in new_rom:
                     if math.dist(square, adv_pose) > math.dist(my_pose, adv_pose):
                         # if random.random() < 0.5:
                         new_rom.remove(square)
                 np.random.shuffle(new_rom)
-                if maximizer == False:
+                if not maximizer:
                     new_rom = new_rom[0:(len(new_rom) // 3)]
 
-            elif game_state == 2:
+            elif game_state[0] == 2:
                 np.random.shuffle(new_rom)
                 new_rom = new_rom[0:(len(new_rom) // 2)]
 
@@ -246,14 +314,15 @@ class StudentAgent(Agent):
                         new_dirs.remove(1)
             return new_dirs
 
+        # TODO: fix minimax algorithm
         # Main recursive minimax function:
         def depth_limited_minimax(board, my_pose, adv_pose, depth, alpha, beta, max_time, start_time,
                                   maximizing_player=True):
 
             if depth == 0:
-                return ((13, 13), 3), heuristic_evaluation(board, my_pose, adv_pose)
-            if depth == 1:
-                print("depth 1")
+                return ((13, 13), 3), heuristic_evaluation(board, my_pose, adv_pose, None)  # TODO: fix minimax
+            # if depth == 1:
+                # print("depth 1")
             if depth == 2:
                 print("depth 2")
             if depth == 3:
@@ -269,33 +338,37 @@ class StudentAgent(Agent):
                 max_eval = float('-inf')
                 best_move = ((13, 13), 3)
                 rom = get_rom(my_pose)
-                rom = change_rom(rom, my_pose, adv_pose, True)
+                # rom = change_rom(rom, my_pose, adv_pose, True)
                 # Iterating over every square and every wall in rom
                 for square in rom:
                     dirs = [0, 1, 2, 3]
-                    new_dirs = change_dirs(dirs, square, adv_pose)
-                    for d in new_dirs:
+                    np.random.shuffle(dirs)
+                    # new_dirs = change_dirs(dirs, square, adv_pose)
+                    for d in dirs:
                         # If move valid, proceed
                         if check_valid_move(my_pose, np.array(square), d, adv_pose):
 
                             new_my_pos = square
                             # Update the board with the move
-                            # print("checking valid maximizer move ", tuple(square), d, "depth ", depth)
                             new_chess_board = update_board(board, square[0], square[1], d)
 
                             # Time Break Condition
                             if time.time() - start_time < max_time:
-                                # Perform recursive depth-limited Minimax
-                                _, eval = depth_limited_minimax(new_chess_board, new_my_pos, adv_pose, depth - 1, alpha,
-                                                                beta, start_time, max_time, False)
+                                score = heuristic_evaluation(new_chess_board, new_my_pos, adv_pose, d)
+                                if score > 0 or random.random() > 0.2:
+                                    # print("Entering Maximizer Move with score: [", score, "] and depth: [", depth, "]")
+                                    # Perform recursive depth-limited Minimax
+                                    _, eval = depth_limited_minimax(new_chess_board, new_my_pos, adv_pose, depth - 1,
+                                                                    alpha,
+                                                                    beta, start_time, max_time, False)
 
-                                if eval > max_eval:
-                                    max_eval = eval
-                                    best_move = ((new_my_pos[0], new_my_pos[1]), d)
+                                    if eval > max_eval:
+                                        max_eval = eval
+                                        best_move = ((new_my_pos[0], new_my_pos[1]), d)
 
-                                alpha = max(alpha, eval)
-                                if beta <= alpha:
-                                    break  # Beta cut-off
+                                    alpha = max(alpha, eval)
+                                    if beta <= alpha:
+                                        break  # Beta cut-off
 
                 return best_move, max_eval
 
@@ -303,7 +376,7 @@ class StudentAgent(Agent):
                 min_eval = float('inf')
                 best_move = ((13, 13), 3)
                 rom = get_rom(adv_pose)
-                rom = change_rom(rom, adv_pose, my_pose, False)
+                # rom = change_rom(rom, adv_pose, my_pose, False)
                 # Iterating over every square and every wall in ROM
                 for square in rom:
                     dirs = [0, 1, 2, 3]
@@ -311,25 +384,30 @@ class StudentAgent(Agent):
                     for d in dirs[0:4]:
                         # If move valid, proceed
                         if check_valid_move(adv_pose, np.array(square), d, my_pose):
+
                             new_adv_pos = square
-                            print("checking valid minimizer move ", tuple(square), d, "depth ", depth)
 
                             # Update the board with the move
                             new_chess_board = update_board(board, square[0], square[1], d)
 
                             if time.time() - start_time < max_time:
+                                score = heuristic_evaluation(new_chess_board, new_adv_pos, my_pose, d)
+                                if score > 0 or random.random() > 0.2:
+                                    # print("Entering Minimizer Move with score: [", score, "] and depth: [", depth, "]")
 
-                                # Perform recursive depth-limited Minimax
-                                _, eval = depth_limited_minimax(new_chess_board, my_pose, new_adv_pos, depth - 1, alpha,
-                                                                beta, start_time, max_time, True)
+                                    # Perform recursive depth-limited Minimax
+                                    _, eval = depth_limited_minimax(new_chess_board, my_pose, new_adv_pos, depth - 1,
+                                                                    alpha,
+                                                                    beta, start_time, max_time, True)
 
-                                if eval < min_eval:
-                                    min_eval = eval
-                                    best_move = ((new_adv_pos[0], new_adv_pos[1]), d)  # Assuming adversary doesn't move
+                                    if eval < min_eval:
+                                        min_eval = eval
+                                        best_move = (
+                                        (new_adv_pos[0], new_adv_pos[1]), d)  # Assuming adversary doesn't move
 
-                                beta = min(beta, eval)
-                                if beta <= alpha:
-                                    break  # Alpha cut-off
+                                    beta = min(beta, eval)
+                                    if beta <= alpha:
+                                        break  # Alpha cut-off
 
                 return best_move, min_eval
 
@@ -360,10 +438,11 @@ class StudentAgent(Agent):
                 return False
 
         start_time = time.time()
+        game_state = get_game_state(chess_board)
 
         depth_limit = 1
         best_move = None
-        max_time = 3
+        max_time = 2
         best_eval = 0
         while time.time() - start_time < max_time:  # Time limit of 5 seconds
             alpha = float('-inf')
