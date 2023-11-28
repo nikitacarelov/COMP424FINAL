@@ -32,14 +32,12 @@ class RandomAgent(Agent):
                             # chess_board True means wall
                             if not chess_board[r, c, d] and
                             not adv_pos == (r + moves[d][0], c + moves[d][1])]  # cannot move through Adversary
-            print(allowed_dirs)
 
             if len(allowed_dirs) == 0:
                 # If no possible move, we must be enclosed by our Adversary
                 break
 
             random_dir = allowed_dirs[np.random.randint(0, len(allowed_dirs))]
-            print(random_dir)
 
             # This is how to update a row,col by the entries in moves
             # to be consistent with game logic

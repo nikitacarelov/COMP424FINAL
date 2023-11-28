@@ -29,26 +29,32 @@ class StudentAgent(Agent):
         allMoves = []
         num_squares_available = 0
 
-        def dfs(x, y, dir, steps_taken):
+        def dfs(x, y, steps_taken):
             nonlocal num_squares_available
             if steps_taken == max_step:
                 return
             visited.add((x, y))
+            num_squares_available += 1
 
             # which direction can we add walls for each square?
-            for dir_wall in range(0, 4):
+            for dir_wall in range(4):
                 if not chess_board[x, y, dir_wall]:
                     board = deepcopy(chess_board)
-                    board[x][y][dir] = True
-                    allMoves.append((((x, y), dir), board))
-                    num_squares_available += 1
+                    # board = chess_board
+                    board[x][y][dir_wall] = True
+                    allMoves.append((((x, y), dir_wall), board))
+                    # board[x][y][dir_wall] = False
+                    
 
-            for (r, c, dir) in [(x - 1, y, 0), (x + 1, y, 2), (x, y - 1, 3), (x, y + 1, 1)]:
-                if (r, c) not in visited and not chess_board[x, y, dir] and not other_pos == (r, c) and 0 <= r < len(chess_board) and 0 <= c < len(chess_board[0]):
-                    dfs(r, c, dir, steps_taken + 1)
+            # Moves (Up, Right, Down, Left)
+            moves = ((-1, 0), (0, 1), (1, 0), (0, -1))
+
+            for (r, c, direction) in [(x - 1, y, 0), (x + 1, y, 2), (x, y - 1, 3), (x, y + 1, 1)]:
+                if (r, c) not in visited and not chess_board[x, y, direction] and not other_pos == (r, c) and 0 <= r < len(chess_board) and 0 <= c < len(chess_board[0]):
+                    dfs(r, c, steps_taken + 1)
 
         x, y = player_pos
-        dfs(x, y, 0, 0)
+        dfs(x, y, 0)
 
         return (allMoves, num_squares_available)
 
@@ -57,7 +63,7 @@ class StudentAgent(Agent):
 
         # minimax score heuristic: number squares I have to move - number squares adversay has to move in
         # depth limited minimax w AB pruning
-        if depth == 2:
+        if depth == 1:
             nums_squares_I_have_to_move = self.computeAllMoves(
                 player_pos, other_pos, max_step, chess_board)[1]
 
