@@ -34,21 +34,23 @@ class StudentAgent(Agent):
             if steps_taken == max_step:
                 return
             visited.add((x, y))
+            num_squares_available += 1
 
             # which direction can we add walls for each square?
             for dir_wall in range(0, 4):
                 if not chess_board[x, y, dir_wall]:
-                    board = deepcopy(chess_board)
+
+                    board = chess_board
                     board[x][y][dir_wall] = True
                     allMoves.append((((x, y), dir_wall), board))
-                    num_squares_available += 1
+                    board[x][y][dir_wall] = False
 
             for (r, c, dir) in [(x - 1, y, 0), (x + 1, y, 2), (x, y - 1, 3), (x, y + 1, 1)]:
                 if (r, c) not in visited and not chess_board[x, y, dir] and not other_pos == (r, c) and 0 <= r < len(chess_board) and 0 <= c < len(chess_board[0]):
                     dfs(r, c, steps_taken + 1)
 
         x, y = player_pos
-        dfs(x, y,0)
+        dfs(x, y, 0)
 
         return (allMoves, num_squares_available)
 
@@ -72,11 +74,11 @@ class StudentAgent(Agent):
             # compute all moves
             moves_list = self.computeAllMoves(
                 player_pos, other_pos, max_step, chess_board)[0]
-            for ((max_player_pos, direction), board) in moves_list:
+            for ((max_player_pos, dir), board) in moves_list:
 
                 # call minimax on all children of node
                 val = self.minimax(max_player_pos, other_pos, max_step,
-                                           board, depth + 1, False, alpha, beta)
+                                   board, depth + 1, False, alpha, beta)
 
                 best = max(best, val)
                 alpha = max(alpha, best)
@@ -92,7 +94,7 @@ class StudentAgent(Agent):
             moves_list = self.computeAllMoves(
                 other_pos, player_pos, max_step, chess_board)[0]
 
-            for ((min_player_pos, direction), board) in moves_list:
+            for ((min_player_pos, dir), board) in moves_list:
                 val = self.minimax(player_pos, min_player_pos, max_step,
                                    board, depth + 1, True, alpha, beta)
 
@@ -132,22 +134,20 @@ class StudentAgent(Agent):
         beta = 1000
         best_moves = []
 
-        moves_list = self.computeAllMoves(my_pos, adv_pos, max_step, chess_board)[0]
+        moves_list = self.computeAllMoves(
+            my_pos, adv_pos, max_step, chess_board)[0]
 
-        for ((max_player_pos, direction), board) in moves_list:
+        for ((max_player_pos, dir), board) in moves_list:
             # call minimax on all children of node
+
             val = self.minimax(max_player_pos, adv_pos, max_step,
                                board, depth + 1, False, alpha, beta)
             if val > alpha:
                 alpha = val
                 best_moves.clear()
-                best_moves.append((max_player_pos, direction))
+                best_moves.append((max_player_pos, dir))
             elif val == alpha:
-                best_moves.append((max_player_pos, direction))
-
-
-
-
+                best_moves.append((max_player_pos, dir))
 
         time_taken = time.time() - start_time
 
@@ -155,6 +155,3 @@ class StudentAgent(Agent):
 
         # dummy return
         return best_moves[np.random.randint(0, len(best_moves))] if len(best_moves) > 1 else best_moves[0]
-
-
-
