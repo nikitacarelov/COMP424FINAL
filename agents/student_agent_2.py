@@ -10,15 +10,11 @@ import time
 import math
 
 
-@register_agent("student_agent")
-class StudentAgent(Agent):
-    """
-    A dummy class for your implementation. Feel free to use this class to
-    add any helper functionalities needed for your agent.
-    """
+@register_agent("student_agent_2")
+class StudentAgent2(Agent):
 
     def __init__(self):
-        super(StudentAgent, self).__init__()
+        super(StudentAgent2, self).__init__()
         self.name = "StudentAgent"
         self.dir_map = {
             "u": 0,
