@@ -12,7 +12,6 @@ import math
 
 @register_agent("student_agent_2")
 class StudentAgent2(Agent):
-
     def __init__(self):
         super(StudentAgent2, self).__init__()
         self.name = "StudentAgent"
