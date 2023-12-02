@@ -14,7 +14,7 @@ import math
 class StudentAgent2(Agent):
     def __init__(self):
         super(StudentAgent2, self).__init__()
-        self.name = "StudentAgent"
+        self.name = "StudentAgent2"
         self.dir_map = {
             "u": 0,
             "r": 1,
@@ -160,12 +160,12 @@ class StudentAgent2(Agent):
                 adv_score = 0
                 for square in my_rom:
                     for d in range(4):
-                        if check_valid_move(my_pose, np.array(square), d, adv_pos):
+                        if check_valid_move(my_pose, np.array(square), d, adv_pose):
                             my_score += 1
 
                 for square in adv_rom:
                     for d in range(4):
-                        if check_valid_move(adv_pos, np.array(square), d, my_pose):
+                        if check_valid_move(adv_pose, np.array(square), d, my_pose):
                             adv_score += 1
 
                 score = my_score - adv_score
@@ -173,7 +173,7 @@ class StudentAgent2(Agent):
 
             def distance_heuristic():
                 dist = np.sum(math.dist(my_pose, adv_pose))
-                dist_score = abs(20 / dist)
+                dist_score = abs(30 / dist)
                 return dist_score
 
             def wall_heuristic():
@@ -182,49 +182,65 @@ class StudentAgent2(Agent):
                 corner_score = 4
                 death_score = -200
 
-                # Cornered: BAD
+                # YOU cornered: BAD
                 if np.sum(board[my_pose[0], my_pose[1]]) == 3:
                     wall_score = death_score
 
+                # Horizontal Line:
                 if d == 0 or d == 2:  # walls in line with up or down wall
                     try:
-                        if board[my_pose[0], my_pose[1] + 1, d] is True or board[my_pose[0], my_pose[1] - 1, d] is True:
+                        if board[my_pose[0], my_pose[1] + 1, d] == 1:
+                            wall_score += long_score
+                    except:
+                        pass
+                    try:
+                        if board[my_pose[0], my_pose[1] - 1, d] == 1:
                             wall_score += long_score
                     except:
                         pass
 
+                # Up Corner:
                 if d == 0:  # walls left or right upwards of you
                     try:
-                        if board[my_pose[0] - 1, my_pose[1], 1] is True or board[my_pose[0] - 1, my_pose[1], 3] is True:
-                            wall_score += corner_score
-                    except:
-                        pass
-                if d == 2:  # walls left or right downwards of you
-                    try:
-                        if board[my_pose[0] + 1, my_pose[1], 1] is True or board[my_pose[0] + 1, my_pose[1], 3] is True:
+                        if board[my_pose[0] - 1, my_pose[1], 1] == 1 or board[my_pose[0] - 1, my_pose[1], 3] == 1:
                             wall_score += corner_score
                     except:
                         pass
 
+                # Down Corner:
+                if d == 2:  # walls left or right downwards of you
+                    try:
+                        if board[my_pose[0] + 1, my_pose[1], 1] == 1 or board[my_pose[0] + 1, my_pose[1], 3] == 1:
+                            wall_score += corner_score
+                    except:
+                        pass
+
+                # Vertical Line:
                 if d == 1 or d == 3:  # right or left walls
                     try:
-                        if board[my_pose[0] + 1, my_pose[1], d] is True or board[my_pose[0] - 1, my_pose[1], d] is True:
+                        if board[my_pose[0] + 1, my_pose[1], d] == 1:
+                            wall_score += long_score
+                    except:
+                        pass
+                    try:
+                        if board[my_pose[0] - 1, my_pose[1], d] == 1:
                             wall_score += long_score
                     except:
                         pass
 
+                # Right Corner:
                 if d == 1:  # walls down or up rightwards of you
                     try:
-                        if board[my_pose[0], my_pose[1] + 1, 1] is True or board[my_pose[0], my_pose[1] + 1, 3] is True:
+                        if board[my_pose[0], my_pose[1] + 1, 0] == 1 or board[my_pose[0], my_pose[1] + 1, 2] == 1:
                             wall_score += corner_score
                     except:
                         pass
 
+                # Left Corner:
                 if d == 3:  # walls left or right downwards of you
                     try:
-                        if board[my_pose[0], my_pose[1] - 1, 1] is True or board[my_pose[0], my_pose[1] - 1, 3] is True:
+                        if board[my_pose[0], my_pose[1] - 1, 0] == 1 or board[my_pose[0], my_pose[1] - 1, 2] == 1:
                             wall_score += corner_score
-
                     except:
                         pass
                 return wall_score
@@ -238,7 +254,7 @@ class StudentAgent2(Agent):
                 else:
                     return 0
 
-            score = ((30 * rom_heuristic()) + (10 * distance_heuristic()) + (2 * wall_heuristic()) +
+            score = ((2 * rom_heuristic()) + (20 * distance_heuristic()) + (2 * wall_heuristic()) +
                      (100 * endgame_heuristic()))
             return score
 
@@ -316,8 +332,7 @@ class StudentAgent2(Agent):
 
             if depth == 0 or (time.time() - start_time) > max_time:
                 if maximizing_player:
-                    return (my_pose, wall_dir), heuristic_evaluation(board, my_pose, adv_pose,
-                                                                     None)  # TODO: fix minimax
+                    return (my_pose, wall_dir), heuristic_evaluation(board, my_pose, adv_pose, None)
                 else:
                     return (my_pose, wall_dir), heuristic_evaluation(board, adv_pose, my_pose, None)
             # end_return = check_endgame(board, my_pose, adv_pose)
@@ -355,14 +370,15 @@ class StudentAgent2(Agent):
                                     _, maximizer_eval = depth_limited_minimax(new_chess_board, new_my_pos, adv_pose,
                                                                               depth - 1, alpha, beta, max_time, d,
                                                                               False)
+                                else:
+                                    maximizer_eval = score
 
-                                    if maximizer_eval > max_eval:
-                                        max_eval = maximizer_eval
-                                        best_move = ((new_my_pos[0], new_my_pos[1]), d)
-
-                                    alpha = max(alpha, maximizer_eval)
-                                    if beta <= alpha:
-                                        break  # Beta cut-off
+                                if maximizer_eval > max_eval:
+                                    max_eval = maximizer_eval
+                                    best_move = ((new_my_pos[0], new_my_pos[1]), d)
+                                alpha = max(alpha, maximizer_eval)
+                                if beta <= alpha:
+                                    break  # Beta cut-off
 
                 return best_move, max_eval
 
@@ -434,6 +450,8 @@ class StudentAgent2(Agent):
                 return True, max_time_taken
             else:
                 return False
+
+
 
         start_time = time.time()
         game_state = get_game_state(chess_board)
