@@ -27,3 +27,13 @@ New Result:
 0.4666666666666667
 Reusing previous result: 
 0.8
+New Result: 
+0.7333333333333333
+Reusing previous result: 
+0.8
+New Result: 
+0.8
+New Result: 
+0.6
+Reusing previous result: 
+0.8

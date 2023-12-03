@@ -474,7 +474,7 @@ class StudentAgent3(Agent):
         max_time = 2
         best_eval = 0
 
-        while time.time() - start_time < max_time:  # Time limit of 5 seconds
+        while time.time() - start_time < max_time:  # Time limit of 2 seconds
             alpha = float('-inf')
             beta = float('inf')
 

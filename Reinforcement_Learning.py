@@ -22,7 +22,6 @@ while iteration < 20 or (time.time() - start_time) > 1000:
     # save params for the program
     np.savetxt("Parameters.txt", new_params, delimiter=",")
 
-
     # get previous result to compare to from RL_Logs.txt
 
     command = f"Get-Content {"RL_Logs.txt"} | Select-Object -Last 1"
