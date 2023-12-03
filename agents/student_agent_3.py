@@ -244,17 +244,19 @@ class StudentAgent3(Agent):
                 end_return = check_endgame(board, my_pose, adv_pose)
                 if end_return[0] is True:
                     end_score = end_return[1] - end_return[2]
-                    print("end score: ", end_score)
+                    # print("end score: ", end_score)
                     return end_score
                 else:
                     return 0
 
             game_state = self.game_state
 
+            my_data = np.genfromtxt('Parameters.txt', delimiter=',')
+
             # Parameters:
-            rom_const, rom_mult, rom_exp = 5, 10, 2
-            dist_const, dist_mult, dist_exp = 5, 10, 2
-            wall_const, wall_mult, wall_exp = 5, 10, 2
+            rom_const, rom_mult, rom_exp = my_data[0, 0], my_data[0, 1], my_data[0, 2]
+            dist_const, dist_mult, dist_exp = my_data[1, 0], my_data[1, 1], my_data[1, 2]
+            wall_const, wall_mult, wall_exp = my_data[2, 0], my_data[2, 1], my_data[2, 2]
 
             rom_par = rom_const + (rom_mult * (game_state[1] ** rom_exp))
 
@@ -262,8 +264,8 @@ class StudentAgent3(Agent):
 
             wall_par = wall_const + (wall_mult * (game_state[1] ** wall_exp))
 
-            score = (100 * endgame_heuristic()) + (2 * rom_heuristic()) + (20 * distance_heuristic()) + (
-                        4 * wall_heuristic())
+            score = (100 * endgame_heuristic()) + (rom_par * rom_heuristic()) + (dist_par * distance_heuristic()) + (
+                        wall_par * wall_heuristic())
             return score
 
         def adv_heuristic_evaluation(board, my_pose, adv_pose, d):
@@ -353,7 +355,7 @@ class StudentAgent3(Agent):
                 end_return = check_endgame(board, my_pose, adv_pose)
                 if end_return[0] is True:
                     end_score = end_return[1] - end_return[2]
-                    print("end score: ", end_score)
+                    # print("end score: ", end_score)
                     return end_score
                 else:
                     return 0
@@ -485,14 +487,14 @@ class StudentAgent3(Agent):
             if eval > best_eval:
                 temp_best_move = new_best_move
                 best_move = temp_best_move
-                print("best move: ", best_move, " with score: ", eval)
+                # print("best move: ", best_move, " with score: ", eval)
             # Update the depth limit for the next iteration
             depth_limit += 1
 
         if best_move is None:
             return (13, 13), 1
-        print("best move: ",best_move,", best eval: ", best_eval)
-        print("this took ", time.time() - start_time, " seconds")
+        # print("best move: ",best_move,", best eval: ", best_eval)
+        # print("this took ", time.time() - start_time, " seconds")
         return best_move
 
         # dummy return

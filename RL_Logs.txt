@@ -1,0 +1,29 @@
+0.5
+New Result: 
+0.3333333333333333
+Reusing previous result: 
+0.5
+New Result: 
+0.6
+New Result: 
+0.5333333333333333
+Reusing previous result: 
+0.6
+New Result: 
+0.5333333333333333
+Reusing previous result: 
+0.6
+New Result: 
+0.8
+New Result: 
+0.5333333333333333
+Reusing previous result: 
+0.8
+New Result: 
+0.6
+Reusing previous result: 
+0.8
+New Result: 
+0.4666666666666667
+Reusing previous result: 
+0.8

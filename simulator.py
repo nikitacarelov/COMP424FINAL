@@ -124,6 +124,13 @@ class Simulator:
             f"Player {PLAYER_1_NAME} win percentage: {p1_win_count / self.args.autoplay_runs}. Maxium turn time was {np.round(np.max(p1_times),5)} seconds.")
         logger.info(
             f"Player {PLAYER_2_NAME} win percentage: {p2_win_count / self.args.autoplay_runs}. Maxium turn time was {np.round(np.max(p2_times),5)} seconds.")
+        f = open("RL_Logs.txt", "a")
+        f.write('\n')
+        f.write("New Result: ")
+        f.write('\n')
+        f.write(str(p1_win_count / self.args.autoplay_runs))
+        f.close()
+
 
 if __name__ == "__main__":
     args = get_args()
