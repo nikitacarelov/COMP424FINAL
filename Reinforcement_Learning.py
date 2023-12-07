@@ -4,20 +4,28 @@ import time
 
 start_time = time.time()
 iteration = 1
-max_iter = 20
-while iteration < 20 or (time.time() - start_time) > 1000:
+max_iter = 100
+good_dir = False
+grad = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+while iteration < max_iter:
 
     # Simulated annealing to the nudge
-    nudge_multiplier = 3 * (max_iter/iteration)/max_iter
+    nudge_multiplier = 2 * (max_iter / iteration) / max_iter
 
     # Get parameters from text
     prev_params = np.genfromtxt('Parameters.txt', delimiter=',')
-
+    np.savetxt("curr_best_params.txt", prev_params, delimiter=",")
     # random nudge value
+
     random_nudge = nudge_multiplier * np.random.uniform(-1, 1, (3, 3))
 
+    if good_dir is True:
+        nudge = grad
+    else:
+        nudge = random_nudge
+
     # execute random nudge
-    new_params = prev_params + random_nudge
+    new_params = prev_params + nudge
 
     # save params for the program
     np.savetxt("Parameters.txt", new_params, delimiter=",")
@@ -28,7 +36,8 @@ while iteration < 20 or (time.time() - start_time) > 1000:
     RL_output = subprocess.check_output(['powershell', '-Command', command], shell=True, text=True)
     previous_result = float(RL_output)
     # run the autorun
-    subprocess.run('python simulator.py --player_1 student_agent_3 --player_2 student_agent  --autoplay --autoplay_runs 15')
+    subprocess.run(
+        'python simulator.py --player_1 student_agent_3 --player_2 student_agent --autoplay --autoplay_runs 50')
 
     # get the new result from RL_Logs.txt
     RL_output = subprocess.check_output(['powershell', '-Command', command], shell=True, text=True)
@@ -46,5 +55,7 @@ while iteration < 20 or (time.time() - start_time) > 1000:
         f.write('\n')
         f.write(str(previous_result))
         f.close()
+    else:
+        grad = new_params - prev_params
 
     iteration += 1

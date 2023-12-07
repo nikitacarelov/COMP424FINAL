@@ -1,3 +1,362 @@
+10.5
+New Result: 
+0.7066666666666667
+New Result: 
+0.5866666666666667
+Reusing previous result: 
+0.7066666666666667
+New Result: 
+0.5066666666666667
+Reusing previous result: 
+0.7066666666666667
+New Result: 
+0.6
+Reusing previous result: 
+0.7066666666666667
+New Result: 
+0.6533333333333333
+Reusing previous result: 
+0.7066666666666667
+New Result: 
+0.4666666666666667
+Reusing previous result: 
+0.7066666666666667
+New Result: 
+0.56
+Reusing previous result: 
+0.7066666666666667
+New Result: 
+0.64
+Reusing previous result: 
+0.7066666666666667
+New Result: 
+0.5466666666666666
+Reusing previous result: 
+0.7066666666666667
+New Result: 
+0.56
+Reusing previous result: 
+0.7066666666666667
+New Result: 
+0.7333333333333333
+New Result: 
+0.64
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.5866666666666667
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.6
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.5866666666666667
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.6266666666666667
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.6666666666666666
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.56
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.5866666666666667
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.5866666666666667
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.5
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.6
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.6
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.62
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.58
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.6
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.46
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.66
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.5
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.62
+Reusing previous result: 
+0.7333333333333333
+New Result: 
+0.54
+New Result: 
+0.62
+New Result: 
+0.62
+New Result: 
+0.64
+New Result: 
+0.54
+Reusing previous result: 
+0.64
+New Result: 
+0.66
+New Result: 
+0.58
+Reusing previous result: 
+0.66
+New Result: 
+0.64
+Reusing previous result: 
+0.66
+New Result: 
+0.7
+New Result: 
+0.54
+Reusing previous result: 
+0.7
+New Result: 
+0.54
+Reusing previous result: 
+0.7
+New Result: 
+0.62
+Reusing previous result: 
+0.7
+New Result: 
+0.72
+New Result: 
+0.68
+Reusing previous result: 
+0.72
+New Result: 
+0.66
+Reusing previous result: 
+0.72
+New Result: 
+0.52
+Reusing previous result: 
+0.72
+New Result: 
+0.7
+Reusing previous result: 
+0.72
+New Result: 
+0.56
+Reusing previous result: 
+0.72
+New Result: 
+0.56
+Reusing previous result: 
+0.72
+New Result: 
+0.54
+Reusing previous result: 
+0.72
+New Result: 
+0.64
+Reusing previous result: 
+0.72
+New Result: 
+0.54
+Reusing previous result: 
+0.72
+New Result: 
+0.68
+Reusing previous result: 
+0.72
+New Result: 
+0.5
+Reusing previous result: 
+0.72
+New Result: 
+0.58
+Reusing previous result: 
+0.72
+New Result: 
+0.46
+Reusing previous result: 
+0.72
+New Result: 
+0.74
+New Result: 
+0.76
+New Result: 
+0.56
+Reusing previous result: 
+0.76
+New Result: 
+0.72
+Reusing previous result: 
+0.76
+New Result: 
+0.7
+Reusing previous result: 
+0.76
+New Result: 
+0.6
+Reusing previous result: 
+0.76
+New Result: 
+0.64
+Reusing previous result: 
+0.76
+New Result: 
+0.62
+Reusing previous result: 
+0.76
+New Result: 
+0.66
+Reusing previous result: 
+0.76
+New Result: 
+0.56
+Reusing previous result: 
+0.76
+New Result: 
+0.65
+New Result: 
+0.74
+New Result: 
+0.58
+Reusing previous result: 
+0.74
+New Result: 
+0.64
+Reusing previous result: 
+0.74
+New Result: 
+0.72
+Reusing previous result: 
+0.74
+New Result: 
+0.66
+Reusing previous result: 
+0.74
+New Result: 
+0.6933333333333334
+New Result: 
+0.7
+New Result: 
+0.58
+Reusing previous result: 
+0.7
+New Result: 
+0.62
+Reusing previous result: 
+0.7
+New Result: 
+0.66
+Reusing previous result: 
+0.7
+New Result: 
+0.62
+Reusing previous result: 
+0.7
+New Result: 
+0.58
+Reusing previous result: 
+0.7
+New Result: 
+0.68
+Reusing previous result: 
+0.7
+New Result: 
+0.58
+Reusing previous result: 
+0.7
+New Result: 
+0.56
+Reusing previous result: 
+0.7
+New Result: 
+0.68
+Reusing previous result: 
+0.7
+New Result: 
+0.68
+Reusing previous result: 
+0.7
+New Result: 
+0.56
+Reusing previous result: 
+0.7
+New Result: 
+0.58
+Reusing previous result: 
+0.7
+New Result: 
+0.58
+Reusing previous result: 
+0.7
+New Result: 
+0.58
+Reusing previous result: 
+0.7
+New Result: 
+0.62
+Reusing previous result: 
+0.7
+New Result: 
+0.44
+Reusing previous result: 
+0.7
+New Result: 
+0.48
+Reusing previous result: 
+0.7
+New Result: 
+0.72
+New Result: 
+0.74
+New Result: 
+0.62
+Reusing previous result: 
+0.74
+New Result: 
+0.7
+Reusing previous result: 
+0.74
+New Result: 
+0.52
+Reusing previous result: 
+0.74
+New Result: 
+0.54
+Reusing previous result: 
+0.74
+New Result: 
+0.66
+Reusing previous result: 
+0.74
 0.74
 New Result: 
 0.6857142857142857
@@ -1264,628 +1623,4 @@ Reusing previous result:
 New Result: 
 0.575
 Reusing previous result: 
-0.5
-New Result: 
-0.42
-Reusing previous result: 
-0.5
-New Result: 
-0.42
-Reusing previous result: 
-0.5
-New Result: 
-0.54
-New Result: 
-0.44
-Reusing previous result: 
-0.54
-New Result: 
-0.56
-New Result: 
-0.54
-Reusing previous result: 
-0.56
-New Result: 
-0.44
-Reusing previous result: 
-0.56
-New Result: 
-0.5
-Reusing previous result: 
-0.56
-New Result: 
-0.6
-New Result: 
-0.46
-Reusing previous result: 
-0.6
-New Result: 
-0.54
-Reusing previous result: 
-0.6
-New Result: 
-0.38
-Reusing previous result: 
-0.6
-New Result: 
-0.6
-New Result: 
-0.58
-Reusing previous result: 
-0.6
-New Result: 
-0.44
-Reusing previous result: 
-0.6
-New Result: 
-0.56
-Reusing previous result: 
-0.6
-New Result: 
-0.5
-Reusing previous result: 
-0.6
-New Result: 
-0.54
-Reusing previous result: 
-0.6
-New Result: 
-0.5
-Reusing previous result: 
-0.6
-New Result: 
-0.56
-Reusing previous result: 
-0.6
-New Result: 
-0.56
-Reusing previous result: 
-0.6
-New Result: 
-0.58
-Reusing previous result: 
-0.6
-New Result: 
-0.5
-Reusing previous result: 
-0.6
-New Result: 
-0.56
-Reusing previous result: 
-0.6
-New Result: 
-0.62
-New Result: 
-0.38
-Reusing previous result: 
-0.62
-New Result: 
-0.48
-Reusing previous result: 
-0.62
-New Result: 
-0.62
-New Result: 
-0.64
-New Result: 
-0.6
-Reusing previous result: 
-0.64
-New Result: 
-0.6
-Reusing previous result: 
-0.64
-New Result: 
-0.6
-Reusing previous result: 
-0.64
-New Result: 
-0.56
-Reusing previous result: 
-0.64
-New Result: 
-0.52
-Reusing previous result: 
-0.64
-New Result: 
-0.66
-New Result: 
-0.5
-Reusing previous result: 
-0.66
-New Result: 
-0.68
-New Result: 
-0.48
-Reusing previous result: 
-0.68
-New Result: 
-0.7
-New Result: 
-0.64
-Reusing previous result: 
-0.7
-New Result: 
-0.54
-Reusing previous result: 
-0.7
-New Result: 
-0.6
-Reusing previous result: 
-0.7
-New Result: 
-0.28
-Reusing previous result: 
-0.7
-New Result: 
-0.64
-Reusing previous result: 
-0.7
-New Result: 
-0.4
-Reusing previous result: 
-0.7
-New Result: 
-0.46
-New Result: 
-0.48
-New Result: 
-0.46
-Reusing previous result: 
-0.48
-New Result: 
-0.54
-New Result: 
-0.5
-Reusing previous result: 
-0.54
-New Result: 
-0.46
-Reusing previous result: 
-0.54
-New Result: 
-0.54
-New Result: 
-0.62
-New Result: 
-0.54
-Reusing previous result: 
-0.62
-New Result: 
-0.46
-Reusing previous result: 
-0.62
-New Result: 
-0.48
-Reusing previous result: 
-0.62
-New Result: 
-0.52
-Reusing previous result: 
-0.62
-New Result: 
-0.38
-Reusing previous result: 
-0.62
-New Result: 
-0.5
-Reusing previous result: 
-0.62
-New Result: 
-0.46
-Reusing previous result: 
-0.62
-New Result: 
-0.6333333333333333
-New Result: 
-0.4
-Reusing previous result: 
-0.6333333333333333
-New Result: 
-0.36666666666666664
-Reusing previous result: 
-0.6333333333333333
-New Result: 
-0.5666666666666667
-Reusing previous result: 
-0.6333333333333333
-New Result: 
-0.5666666666666667
-Reusing previous result: 
-0.6333333333333333
-New Result: 
-0.7333333333333333
-New Result: 
-0.6333333333333333
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.6666666666666666
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.43333333333333335
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.4666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.4
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.7333333333333333
-New Result: 
-0.6333333333333333
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.6333333333333333
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.6666666666666666
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.7
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.6
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5333333333333333
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.7333333333333333
-New Result: 
-0.4666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.4666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.6
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.6333333333333333
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.43333333333333335
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5333333333333333
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.6666666666666666
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.4
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5333333333333333
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.7
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.6666666666666666
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.6
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.4666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5666666666666667
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.43333333333333335
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.5
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.48
-Reusing previous result: 
-0.7333333333333333
-New Result: 
-0.52
-New Result: 
-0.54
-New Result: 
-0.58
-New Result: 
-0.44
-Reusing previous result: 
-0.58
-New Result: 
-0.48
-Reusing previous result: 
-0.58
-New Result: 
-0.44
-Reusing previous result: 
-0.58
-New Result: 
-0.52
-Reusing previous result: 
-0.58
-New Result: 
-0.48
-Reusing previous result: 
-0.58
-New Result: 
-0.6
-New Result: 
-0.44
-Reusing previous result: 
-0.6
-New Result: 
-0.54
-Reusing previous result: 
-0.6
-New Result: 
-0.34
-Reusing previous result: 
-0.6
-New Result: 
-0.3
-Reusing previous result: 
-0.6
-New Result: 
-0.5
-Reusing previous result: 
-0.6
-New Result: 
-0.52
-Reusing previous result: 
-0.6
-New Result: 
-0.5
-Reusing previous result: 
-0.6
-New Result: 
-0.52
-Reusing previous result: 
-0.6
-New Result: 
-0.5
-Reusing previous result: 
-0.6
-New Result: 
-0.48
-Reusing previous result: 
-0.6
-New Result: 
-0.4
-Reusing previous result: 
-0.6
-New Result: 
-0.52
-Reusing previous result: 
-0.6
-New Result: 
-0.46
-Reusing previous result: 
-0.6
-New Result: 
-0.38
-Reusing previous result: 
-0.6
-New Result: 
-0.38
-Reusing previous result: 
-0.6
-New Result: 
-0.56
-New Result: 
-0.64
-New Result: 
-0.64
-New Result: 
-0.7
-New Result: 
-0.7
-New Result: 
-0.62
-Reusing previous result: 
-0.7
-New Result: 
-0.56
-Reusing previous result: 
-0.7
-New Result: 
-0.52
-Reusing previous result: 
-0.7
-New Result: 
-0.74
-New Result: 
-0.48
-Reusing previous result: 
-0.74
-New Result: 
-0.6
-Reusing previous result: 
-0.74
-New Result: 
-0.62
-Reusing previous result: 
-0.74
-New Result: 
-0.56
-Reusing previous result: 
-0.74
-New Result: 
-0.62
-Reusing previous result: 
-0.74
-New Result: 
-0.58
-Reusing previous result: 
-0.74
-New Result: 
-0.72
-Reusing previous result: 
-0.74
-New Result: 
-0.72
-Reusing previous result: 
-0.74
-New Result: 
-0.58
-Reusing previous result: 
-0.74
-New Result: 
-0.66
-Reusing previous result: 
-0.74
-New Result: 
-0.54
-Reusing previous result: 
-0.74
-New Result: 
-0.5
-Reusing previous result: 
-0.74
-New Result: 
-0.6
-Reusing previous result: 
-0.74
-New Result: 
-0.58
-Reusing previous result: 
-0.74
-New Result: 
-0.6
-Reusing previous result: 
-0.74
-New Result: 
-0.66
-Reusing previous result: 
-0.74
-New Result: 
-0.64
-Reusing previous result: 
-0.74
-New Result: 
-0.68
-Reusing previous result: 
-0.74
-New Result: 
-0.72
-Reusing previous result: 
-0.74
-New Result: 
-0.58
-Reusing previous result: 
-0.74
-New Result: 
-0.64
-Reusing previous result: 
-0.74
-New Result: 
-0.62
-Reusing previous result: 
-0.74
-New Result: 
-0.58
-Reusing previous result: 
-0.74
-New Result: 
-0.58
-Reusing previous result: 
-0.74
-New Result: 
-0.56
-Reusing previous result: 
-0.74
-New Result: 
-0.48
-Reusing previous result: 
-0.74
-New Result: 
-0.75
+0.875

@@ -28,7 +28,6 @@ class StudentAgent3(Agent):
     def step(self, chess_board, my_pos, adv_pos, max_step):
         # Assuming player is p0
         board_size = len(chess_board[0])
-        board_center = (board_size / 2, board_size / 2)
 
         def get_game_state(board):
             mid_game_ratio = 0.2
@@ -167,8 +166,8 @@ class StudentAgent3(Agent):
                 return rom_score
 
             def distance_heuristic():
-                dist = np.sum(math.dist(my_pose, adv_pose))
-                dist_score = abs(30 / dist)
+                normalized_dist_dif = np.sum(math.dist(my_pose, adv_pose)) # / board_size - target_distance
+                dist_score = abs(30 / normalized_dist_dif)
                 return dist_score
 
             def wall_heuristic():
@@ -251,12 +250,13 @@ class StudentAgent3(Agent):
 
             game_state = self.game_state
 
-            my_data = np.genfromtxt('Parameters.txt', delimiter=',')
+            # my_data = np.genfromtxt('Parameters.txt', delimiter=',')
 
             # Parameters:
-            rom_const, rom_mult, rom_exp = my_data[0, 0], my_data[0, 1], my_data[0, 2]
-            dist_const, dist_mult, dist_exp = my_data[1, 0], my_data[1, 1], my_data[1, 2]
-            wall_const, wall_mult, wall_exp = my_data[2, 0], my_data[2, 1], my_data[2, 2]
+            rom_const, rom_mult, rom_exp = 2.534, -3.883, 3.895
+            dist_const, dist_mult, dist_exp = 16.22, 8.698, 5.227
+            wall_const, wall_mult, wall_exp = 11, -0.8844, -0.365
+            # targ_const, targ_mult, targ_exp = my_data[3, 0], my_data[3, 1], my_data[3, 2]
 
             rom_par = rom_const + (rom_mult * (game_state[1] ** rom_exp))
 
@@ -264,8 +264,11 @@ class StudentAgent3(Agent):
 
             wall_par = wall_const + (wall_mult * (game_state[1] ** wall_exp))
 
-            score = (100 * endgame_heuristic()) + (rom_par * rom_heuristic()) + (dist_par * distance_heuristic()) + (
-                        wall_par * wall_heuristic())
+            #targ_dist = targ_const + (targ_mult * (game_state[1] ** targ_exp))
+
+            score = (100 * endgame_heuristic()) + (rom_par * rom_heuristic()) + (
+                    dist_par * distance_heuristic()) + (
+                            wall_par * wall_heuristic())
             return score
 
         def adv_heuristic_evaluation(board, my_pose, adv_pose, d):
@@ -361,7 +364,7 @@ class StudentAgent3(Agent):
                     return 0
 
             score = (100 * endgame_heuristic()) + (6 * rom_heuristic()) + (20 * distance_heuristic()) + (
-                        2 * wall_heuristic())
+                    2 * wall_heuristic())
             return score
 
         # TODO: fix minimax algorithm
@@ -393,7 +396,8 @@ class StudentAgent3(Agent):
                             new_chess_board = update_board(board, move[0], move[1], d)
                             # print("maximizer")  # Debug
                             score = my_heuristic_evaluation(new_chess_board, new_my_pos, adv_pose, d)
-                            if score > 0:
+
+                            if score > max_eval:
                                 _, eval = depth_limited_minimax2(new_chess_board, new_my_pos, adv_pose,
                                                                  depth - 1, alpha, beta, max_time, d,
                                                                  False)
@@ -431,7 +435,7 @@ class StudentAgent3(Agent):
                             new_chess_board = update_board(board, move[0], move[1], d)
                             # print("Minimizer")  # debug
                             score = -(adv_heuristic_evaluation(new_chess_board, new_adv_pos, my_pose, d))
-                            if score < 0:
+                            if score < min_eval:
                                 # print("Entering Minimizer Move with score: [", score, "] and depth: [", depth, "]")
 
                                 # Perform recursive depth-limited Minimax
@@ -467,14 +471,14 @@ class StudentAgent3(Agent):
         Please check the sample implementation in agents/random_agent.py or agents/human_agent.py for more details.
         """
 
-        start_time = time.time()
-
         depth_limit = 1
         best_move = None
-        max_time = 2
-        best_eval = 0
+        max_time = 1.9
+        best_eval = -1000
+        start_time = time.time()
 
         while time.time() - start_time < max_time:  # Time limit of 2 seconds
+
             alpha = float('-inf')
             beta = float('inf')
 
@@ -487,6 +491,7 @@ class StudentAgent3(Agent):
             if eval > best_eval:
                 temp_best_move = new_best_move
                 best_move = temp_best_move
+                best_eval = eval
                 # print("best move: ", best_move, " with score: ", eval)
             # Update the depth limit for the next iteration
             depth_limit += 1
